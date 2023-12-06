@@ -15,6 +15,7 @@ import java.util.Map;
 public class Aeroport {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int idAeroport;
+    // we don't allow the user to change name
     @Column(name = "name", unique = true)
     private String name;
     private String localisation;

@@ -6,4 +6,6 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface AeroportRepository extends JpaRepository<Aeroport, Integer> {
+    public Aeroport findAeroportByName(String name);
+    public void deleteAeroportByName(String name);
 }
