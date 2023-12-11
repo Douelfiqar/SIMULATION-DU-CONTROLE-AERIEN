@@ -26,6 +26,8 @@ public class Aeroport {
     private int delaiAntiCollision;
     private int tempsDecollageAtterrissage;
     private int dureeBoucleAttente;
+    private Double x;
+    private Double y;
     @ElementCollection
     private Map<Aeroport, Double> distanceAuxAutresAeroports;
 

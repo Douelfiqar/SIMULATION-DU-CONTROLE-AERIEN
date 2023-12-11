@@ -8,4 +8,5 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface TypeAvionRepository extends JpaRepository<TypeAvion, Integer> {
     public TypeAvion findTypeAvionByName(String name);
+    public void removeTypeAvionByName(String name);
 }

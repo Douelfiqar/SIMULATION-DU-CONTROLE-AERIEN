@@ -26,7 +26,7 @@ public class AvionMapper {
     public static AvionResponse AvionToAvionResponse(Avion avion){
         AvionResponse avionResponse = AvionResponse.builder()
                 .numeroSerie(avion.getNumeroSerie())
-                .typeAvionDto(TypeAvionMapper.TypeAvionToTypeAvionResponse(avion.getTypeAvion()))
+                .typeAvionDto(TypeAvionMapper.TypeAvionToTypeAvionDto(avion.getTypeAvion()))
                 .build();
 
         return avionResponse;

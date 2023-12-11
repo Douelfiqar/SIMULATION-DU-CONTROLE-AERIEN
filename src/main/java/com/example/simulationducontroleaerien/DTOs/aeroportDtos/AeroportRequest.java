@@ -8,5 +8,7 @@ public record AeroportRequest(String name,
                               int tempsAccessAuxPistes,
                               int delaiAntiCollision,
                               int tempsDecollageAtterrissage,
-                              int dureeBoucleAttente) {
+                              int dureeBoucleAttente,
+                              Double x,
+                              Double y) {
 }

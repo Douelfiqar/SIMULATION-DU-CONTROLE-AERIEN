@@ -36,6 +36,9 @@ public class AeroportServiceImpl implements AeroportService {
     public AeroportResponse getAeroportByName(String name) {
 
         Aeroport aeroport = aeroportRepository.findAeroportByName(name);
+        if(aeroport==null)
+            return null;
+
         AeroportResponse aeroportResponse = AeroportMapper.AeroportToAeroportResponse(aeroport);
 
         return aeroportResponse;
@@ -46,6 +49,8 @@ public class AeroportServiceImpl implements AeroportService {
 
         // we don't allow the user to change name
         Aeroport aeroport = aeroportRepository.findAeroportByName(aeroportRequest.name());
+        if(aeroport==null)
+            return null;
 
         Aeroport aeroport1 = Aeroport.builder()
                 .idAeroport(aeroport.getIdAeroport())
@@ -72,6 +77,8 @@ public class AeroportServiceImpl implements AeroportService {
 
     @Override
     public void removeAeroportByName(String name) {
-        aeroportRepository.findAeroportByName(name);
+        Aeroport aeroport = aeroportRepository.findAeroportByName(name);
+        if(aeroport!=null)
+            aeroportRepository.findAeroportByName(name);
     }
 }

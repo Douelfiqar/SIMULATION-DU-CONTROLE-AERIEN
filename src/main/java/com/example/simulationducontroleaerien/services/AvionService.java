@@ -7,7 +7,7 @@ import com.example.simulationducontroleaerien.DTOs.aeroportDtos.AeroportResponse
 
 public interface AvionService {
     public AvionResponse addAvion(AvionRequest avionRequest);
-    public AvionResponse getAvionByName(String name);
+    public AvionResponse getAvionByNumeroSerie(String numeroSerie);
     public AvionResponse updateAvion(AvionRequest avionRequest);
     public void removeAvionByName(String name);
 }

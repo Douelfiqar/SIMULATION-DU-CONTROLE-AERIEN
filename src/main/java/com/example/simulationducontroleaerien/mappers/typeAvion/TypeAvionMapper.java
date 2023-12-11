@@ -7,7 +7,7 @@ import com.example.simulationducontroleaerien.entities.Avion;
 import com.example.simulationducontroleaerien.entities.TypeAvion;
 
 public class TypeAvionMapper {
-    public static TypeAvion typeAvionRequestToTypeAvion(TypeAvionDto typeAvionDto){
+    public static TypeAvion typeAvionDtoToTypeAvion(TypeAvionDto typeAvionDto){
         TypeAvion typeAvion = TypeAvion.builder()
                 .name(typeAvionDto.name())
                 .consomationNormale(typeAvionDto.consomationNormale())
@@ -18,7 +18,7 @@ public class TypeAvionMapper {
 
         return typeAvion;
     }
-    public static TypeAvionDto TypeAvionToTypeAvionResponse(TypeAvion typeAvion){
+    public static TypeAvionDto TypeAvionToTypeAvionDto(TypeAvion typeAvion){
         TypeAvionDto typeAvionDto = TypeAvionDto.builder()
                 .name(typeAvion.getName())
                 .consomationNormale(typeAvion.getConsomationNormale())

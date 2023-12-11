@@ -21,5 +21,7 @@ public record AeroportResponse(String name,
                                Map<Aeroport, Double> distanceAuxAutresAeroports,
                                Escale escale,
                                Collection<Vol> volDepart,
-                               Collection<Vol> volArrivee) {
+                               Collection<Vol> volArrivee,
+                               Double x,
+                               Double y) {
 }
