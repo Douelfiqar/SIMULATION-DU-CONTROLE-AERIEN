@@ -7,7 +7,9 @@ import com.example.simulationducontroleaerien.mappers.aeroport.AeroportMapper;
 import com.example.simulationducontroleaerien.repositories.AeroportRepository;
 import com.example.simulationducontroleaerien.services.AeroportService;
 import lombok.AllArgsConstructor;
+import org.springframework.stereotype.Service;
 
+@Service
 @AllArgsConstructor
 public class AeroportServiceImpl implements AeroportService {
     private AeroportRepository aeroportRepository;
