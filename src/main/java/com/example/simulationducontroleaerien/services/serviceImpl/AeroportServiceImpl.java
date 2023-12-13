@@ -7,6 +7,9 @@ import com.example.simulationducontroleaerien.mappers.aeroport.AeroportMapper;
 import com.example.simulationducontroleaerien.repositories.AeroportRepository;
 import com.example.simulationducontroleaerien.services.AeroportService;
 import lombok.AllArgsConstructor;
+
+import java.util.ArrayList;
+
 import org.springframework.stereotype.Service;
 
 @Service
@@ -26,6 +29,7 @@ public class AeroportServiceImpl implements AeroportService {
                 .tempsAccessAuxPistes(aeroportRequest.tempsAccessAuxPistes())
                 .tempsDecollageAtterrissage(aeroportRequest.tempsDecollageAtterrissage())
                 .build();
+        // calculer distance
 
         AeroportResponse aeroportResponse = AeroportMapper.AeroportToAeroportResponse(aeroport);
 

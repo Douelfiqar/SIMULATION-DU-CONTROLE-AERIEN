@@ -8,5 +8,5 @@ public interface TypeAvionService {
     public TypeAvionDto addTypeAvion(TypeAvionDto aeroportRequest);
     public TypeAvionDto getTypeAvionByName(String name);
     public TypeAvionDto updateTypeAvion(TypeAvionDto typeAvionDto);
-    public void removeTypeAvionByName(String name);
+    public void removeTypeAvionByName(String name) throws IllegalAccessException;
 }

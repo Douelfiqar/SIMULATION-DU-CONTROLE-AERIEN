@@ -20,12 +20,11 @@ public class VolController {
     public VolController(VolService volService) {
         this.volService = volService;
     }
-
+    
+    // un vol peut faire pluseurs escales
     @PostMapping
-    public ResponseEntity<VolResponse> addVol(
-            @RequestBody VolRequest volRequest,
-            @RequestBody(required = false) EscaleRequest escaleRequest) {
-        VolResponse volResponse = volService.addVol(volRequest, escaleRequest);
+    public ResponseEntity<VolResponse> addVol(@RequestBody VolRequest volRequest) {
+        VolResponse volResponse = volService.addVol(volRequest);
         return new ResponseEntity<>(volResponse, HttpStatus.CREATED);
     }
 
@@ -54,7 +53,11 @@ public class VolController {
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> removeVolById(@PathVariable int id) {
-        volService.removeVolById(id);
+        try {
+			volService.removeVolById(id);
+		} catch (IllegalAccessException e) {
+			return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+		}
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 }

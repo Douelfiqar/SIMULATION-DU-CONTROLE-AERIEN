@@ -1,14 +1,21 @@
 package com.example.simulationducontroleaerien.entities;
 
-import jakarta.persistence.*;
+import java.util.Collection;
+import java.util.List;
+import java.util.Map;
+
+import jakarta.persistence.Column;
+import jakarta.persistence.ElementCollection;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.Map;
 
 @Entity
 @Data @AllArgsConstructor @NoArgsConstructor @Builder
@@ -31,8 +38,8 @@ public class Aeroport {
     @ElementCollection
     private Map<Aeroport, Double> distanceAuxAutresAeroports;
 
-    @ManyToOne
-    private Escale escale;
+    @OneToMany
+    private List<Escale> escale;
     @OneToMany(mappedBy = "aeroportDepart")
     private Collection<Vol> volDepart;
     @OneToMany(mappedBy = "aeroportArrivee")

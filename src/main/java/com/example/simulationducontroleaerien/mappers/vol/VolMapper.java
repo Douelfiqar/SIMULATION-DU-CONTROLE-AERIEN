@@ -1,17 +1,17 @@
 package com.example.simulationducontroleaerien.mappers.vol;
 
-import com.example.simulationducontroleaerien.DTOs.AvionDtos.AvionRequest;
+import org.springframework.stereotype.Component;
+
 import com.example.simulationducontroleaerien.DTOs.AvionDtos.AvionResponse;
 import com.example.simulationducontroleaerien.DTOs.VolDtos.VolRequest;
 import com.example.simulationducontroleaerien.DTOs.VolDtos.VolResponse;
 import com.example.simulationducontroleaerien.entities.Aeroport;
-import com.example.simulationducontroleaerien.entities.Avion;
 import com.example.simulationducontroleaerien.entities.Vol;
 import com.example.simulationducontroleaerien.mappers.aeroport.AeroportMapper;
+import com.example.simulationducontroleaerien.mappers.avion.AvionMapper;
 import com.example.simulationducontroleaerien.repositories.AeroportRepository;
-import com.example.simulationducontroleaerien.repositories.VolRepository;
+
 import lombok.AllArgsConstructor;
-import org.springframework.stereotype.Component;
 
 @Component
 @AllArgsConstructor
@@ -24,7 +24,7 @@ public class VolMapper {
         Vol vol = Vol.builder()
                 .heurDepart(volRequest.heurDepart())
                 .heurArriver(volRequest.heurArriver())
-//                .escale(volRequest.)
+                .avion(AvionMapper.avionRequestToAvion(volRequest.avion()))
                 .aeroportArrivee(aeroportDepart)
                 .aeroportDepart(aeroportArrivee)
                 .build();
@@ -37,7 +37,7 @@ public class VolMapper {
                 .aeroportArrive(AeroportMapper.AeroportToAeroportResponse(vol.getAeroportArrivee()))
                 .heurArriver(vol.getHeurArriver())
                 .heurDepart(vol.getHeurDepart())
-                //.escale()
+                .avion(AvionMapper.AvionToAvionResponse(vol.getAvion()))
                 .build();
 
         return volResponse;

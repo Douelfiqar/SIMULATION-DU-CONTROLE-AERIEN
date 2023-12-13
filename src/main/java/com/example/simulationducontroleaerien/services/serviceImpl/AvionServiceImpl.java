@@ -9,6 +9,10 @@ import com.example.simulationducontroleaerien.repositories.AvionRepository;
 import com.example.simulationducontroleaerien.repositories.TypeAvionRepository;
 import com.example.simulationducontroleaerien.services.AvionService;
 import lombok.AllArgsConstructor;
+
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.stereotype.Service;
 
 @Service
@@ -55,5 +59,16 @@ public class AvionServiceImpl implements AvionService {
         Avion avion = avionRepository.findAvionByNumeroSerie(numeroSerie);
         if(avion != null)
             avionRepository.deleteAvionByNumeroSerie(numeroSerie);
+    }
+    
+    @Override
+    public List<Avion> getAvionsByType(TypeAvion typeAvion){
+    	List<Avion> avions = avionRepository.findAll();
+    	List<Avion> avionsByType = new ArrayList<>();
+    	for (Avion avion : avions) {
+			if(avion.getTypeAvion().equals(typeAvion))
+				avionsByType.add(avion);
+		}
+    	return avionsByType;
     }
 }

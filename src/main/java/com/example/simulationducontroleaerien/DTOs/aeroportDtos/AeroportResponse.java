@@ -6,6 +6,7 @@ import com.example.simulationducontroleaerien.entities.Vol;
 import lombok.Builder;
 
 import java.util.Collection;
+import java.util.List;
 import java.util.Map;
 
 @Builder
@@ -19,7 +20,7 @@ public record AeroportResponse(String name,
                                int tempsDecollageAtterrissage,
                                int dureeBoucleAttente,
                                Map<Aeroport, Double> distanceAuxAutresAeroports,
-                               Escale escale,
+                               List<Escale> escale,
                                Collection<Vol> volDepart,
                                Collection<Vol> volArrivee,
                                Double x,

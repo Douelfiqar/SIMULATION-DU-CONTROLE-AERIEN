@@ -48,7 +48,11 @@ public class TypeAvionController {
 
     @DeleteMapping("/{name}")
     public ResponseEntity<Void> removeTypeAvionByName(@PathVariable String name) {
-        typeAvionService.removeTypeAvionByName(name);
+        try {
+			typeAvionService.removeTypeAvionByName(name);
+		} catch (IllegalAccessException e) {
+			return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+		}
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 }
