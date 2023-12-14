@@ -6,6 +6,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Date;
 
 @Entity
@@ -19,8 +21,8 @@ public class Vol {
     private int id;
     private Date heurDepart;
     private Date heurArriver;
-    @ManyToOne
-    private Escale escale;
+    @OneToMany(mappedBy = "vol")
+    private Collection<Escale> escale = new ArrayList<>();
     @ManyToOne
     private Aeroport aeroportDepart;
     @ManyToOne

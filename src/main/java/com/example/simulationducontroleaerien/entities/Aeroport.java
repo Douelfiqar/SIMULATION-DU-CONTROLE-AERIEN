@@ -6,6 +6,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
@@ -31,8 +32,8 @@ public class Aeroport {
     @ElementCollection
     private Map<Aeroport, Double> distanceAuxAutresAeroports;
 
-    @ManyToOne
-    private Escale escale;
+    @OneToMany(mappedBy = "aeroport")
+    private Collection<Escale> escale = new ArrayList<>();
     @OneToMany(mappedBy = "aeroportDepart")
     private Collection<Vol> volDepart;
     @OneToMany(mappedBy = "aeroportArrivee")
