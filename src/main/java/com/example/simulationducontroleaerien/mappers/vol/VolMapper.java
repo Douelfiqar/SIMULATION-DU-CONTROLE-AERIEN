@@ -24,7 +24,7 @@ public class VolMapper {
         Vol vol = Vol.builder()
                 .heurDepart(volRequest.heurDepart())
                 .heurArriver(volRequest.heurArriver())
-                .avion(AvionMapper.avionRequestToAvion(volRequest.avion()))
+                //.avion(AvionMapper.avionRequestToAvion(volRequest.avion()))
                 .aeroportArrivee(aeroportDepart)
                 .aeroportDepart(aeroportArrivee)
                 .build();

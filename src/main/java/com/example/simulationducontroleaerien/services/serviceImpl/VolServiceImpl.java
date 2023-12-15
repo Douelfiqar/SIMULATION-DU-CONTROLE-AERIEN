@@ -42,7 +42,7 @@ public class VolServiceImpl implements VolService {
                 .heurArriver(volRequest.heurArriver())
                 .aeroportDepart(aeroportDepart)
                 .aeroportArrivee(aeroportArrive)
-                .avion(AvionMapper.avionRequestToAvion(volRequest.avion()))
+                //.avion(AvionMapper.avionRequestToAvion(volRequest.avion()))
                 .build();
         volRepository.save(vol);
         VolResponse volResponse = VolMapper.VolToVolResponse(vol);
@@ -77,7 +77,7 @@ public class VolServiceImpl implements VolService {
                     .aeroportArrivee(aeroportArrive)
                     .heurArriver(volRequest.heurArriver())
                     .heurDepart(volRequest.heurDepart())
-                    .avion(AvionMapper.avionRequestToAvion(volRequest.avion()))
+                    //.avion(AvionMapper.avionRequestToAvion(volRequest.avion()))
                     .build();
         }
         else

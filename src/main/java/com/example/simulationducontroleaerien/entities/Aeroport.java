@@ -4,6 +4,8 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
+import com.example.simulationducontroleaerien.DTOs.TypeAvionDtos.TypeAvionDto;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.ElementCollection;
 import jakarta.persistence.Entity;
@@ -44,5 +46,6 @@ public class Aeroport {
     private Collection<Vol> volDepart;
     @OneToMany(mappedBy = "aeroportArrivee")
     private Collection<Vol> volArrivee;
+	
 
 }
