@@ -27,4 +27,6 @@ public class Vol {
     private Aeroport aeroportDepart;
     @ManyToOne
     private Aeroport aeroportArrivee;
+    @ManyToOne
+    private Avion avion;
 }

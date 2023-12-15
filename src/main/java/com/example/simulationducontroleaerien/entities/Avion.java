@@ -6,6 +6,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.Collection;
+
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
@@ -20,4 +22,6 @@ public class Avion {
 
     @ManyToOne
     private TypeAvion typeAvion;
+    @OneToMany(mappedBy = "avion")
+    private Collection<Vol> vol;
 }
