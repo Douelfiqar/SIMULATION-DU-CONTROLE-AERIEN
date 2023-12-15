@@ -8,6 +8,7 @@ import com.example.simulationducontroleaerien.entities.Aeroport;
 import com.example.simulationducontroleaerien.entities.Avion;
 import com.example.simulationducontroleaerien.entities.Vol;
 import com.example.simulationducontroleaerien.mappers.aeroport.AeroportMapper;
+import com.example.simulationducontroleaerien.mappers.avion.AvionMapper;
 import com.example.simulationducontroleaerien.repositories.AeroportRepository;
 import com.example.simulationducontroleaerien.repositories.VolRepository;
 import lombok.AllArgsConstructor;
@@ -20,6 +21,7 @@ public class VolMapper {
     public static Vol volRequestToVol(VolRequest volRequest){
         Aeroport aeroportDepart = aeroportRepository.findAeroportByName(volRequest.nameAeroportDepart());
         Aeroport aeroportArrivee = aeroportRepository.findAeroportByName(volRequest.nameAeroportArrive());
+        Avion avion = AvionMapper.avionRequestToAvion(volRequest.avionRequest());
 
         Vol vol = Vol.builder()
                 .heurDepart(volRequest.heurDepart())
@@ -27,16 +29,20 @@ public class VolMapper {
 //                .escale(volRequest.)
                 .aeroportArrivee(aeroportDepart)
                 .aeroportDepart(aeroportArrivee)
+                .avion(avion)
                 .build();
 
         return vol;
     }
     public static VolResponse VolToVolResponse(Vol vol){
+        AvionResponse avionResponse = AvionMapper.AvionToAvionResponse(vol.getAvion());
+
         VolResponse volResponse = VolResponse.builder()
                 .aeroportDepart(AeroportMapper.AeroportToAeroportResponse(vol.getAeroportDepart()))
                 .aeroportArrive(AeroportMapper.AeroportToAeroportResponse(vol.getAeroportArrivee()))
                 .heurArriver(vol.getHeurArriver())
                 .heurDepart(vol.getHeurDepart())
+                .avionResponse(avionResponse)
                 //.escale()
                 .build();
 
