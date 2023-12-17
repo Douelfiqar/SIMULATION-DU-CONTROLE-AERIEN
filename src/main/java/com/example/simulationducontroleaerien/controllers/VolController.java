@@ -1,14 +1,25 @@
 package com.example.simulationducontroleaerien.controllers;
 
-import com.example.simulationducontroleaerien.DTOs.VolDtos.VolRequest;
-import com.example.simulationducontroleaerien.DTOs.VolDtos.VolResponse;
-import com.example.simulationducontroleaerien.DTOs.escaleDtos.EscaleRequest;
-import com.example.simulationducontroleaerien.entities.Escale;
-import com.example.simulationducontroleaerien.services.VolService;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.example.simulationducontroleaerien.DTOs.VolDtos.VolRequest;
+import com.example.simulationducontroleaerien.DTOs.VolDtos.VolResponse;
+import com.example.simulationducontroleaerien.DTOs.escaleDtos.EscaleRequest;
+import com.example.simulationducontroleaerien.entities.Aeroport;
+import com.example.simulationducontroleaerien.entities.Escale;
+import com.example.simulationducontroleaerien.services.VolService;
 
 @RestController
 @RequestMapping("/vols")
@@ -56,5 +67,15 @@ public class VolController {
     public ResponseEntity<Void> removeVolById(@PathVariable int id) {
         volService.removeVolById(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
+    
+    // get shortest path for a vol by id
+    @GetMapping("/path/{id}")
+    public ResponseEntity<List<Aeroport>> getVolShortestPath(@PathVariable int id){
+    	List<Aeroport> path = volService.getShortestPath(id);
+    	if(path != null)
+    		return new ResponseEntity<List<Aeroport>>(path, HttpStatus.OK);
+    	else
+    		return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 }

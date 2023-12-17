@@ -23,7 +23,7 @@ public class AeroportMapper {
     public static AeroportResponse AeroportToAeroportResponse(Aeroport aeroport){
         AeroportResponse aeroportResponse = AeroportResponse.builder()
                 .delaiAttenteAuSol(aeroport.getDelaiAttenteAuSol())
-                .escale(aeroport.getEscale())
+//                .escale(aeroport.getEscale())
                 .volDepart(aeroport.getVolDepart())
                 .volArrivee(aeroport.getVolArrivee())
                 .distanceAuxAutresAeroports(aeroport.getDistanceAuxAutresAeroports())

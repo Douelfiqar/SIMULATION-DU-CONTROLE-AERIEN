@@ -3,6 +3,7 @@ package com.example.simulationducontroleaerien.services.serviceImpl;
 import com.example.simulationducontroleaerien.DTOs.VolDtos.VolRequest;
 import com.example.simulationducontroleaerien.DTOs.VolDtos.VolResponse;
 import com.example.simulationducontroleaerien.DTOs.escaleDtos.EscaleRequest;
+import com.example.simulationducontroleaerien.algorithms.VolAlgorithm;
 import com.example.simulationducontroleaerien.entities.Aeroport;
 import com.example.simulationducontroleaerien.entities.Avion;
 import com.example.simulationducontroleaerien.entities.Escale;
@@ -17,6 +18,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.Collection;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -89,4 +91,12 @@ public class VolServiceImpl implements VolService {
         Vol vol = volRepository.findById(id).orElseThrow();
         volRepository.deleteById(id);
     }
+
+    // find the shortest path for a vol
+	@Override
+	public List<Aeroport> getShortestPath(int id) {
+		Vol vol = volRepository.findById(id).orElseThrow();
+		List<Aeroport> path = VolAlgorithm.volPath(vol);
+		return path;
+	}
 }
