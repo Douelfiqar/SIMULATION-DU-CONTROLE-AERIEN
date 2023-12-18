@@ -21,6 +21,8 @@ public class AeroportMapper {
     }
 
     public static AeroportResponse AeroportToAeroportResponse(Aeroport aeroport){
+
+
         AeroportResponse aeroportResponse = AeroportResponse.builder()
                 .delaiAttenteAuSol(aeroport.getDelaiAttenteAuSol())
                 .escale(aeroport.getEscale())
