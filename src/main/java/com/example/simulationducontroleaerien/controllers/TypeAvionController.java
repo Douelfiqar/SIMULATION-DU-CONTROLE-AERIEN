@@ -1,6 +1,7 @@
 package com.example.simulationducontroleaerien.controllers;
 
 import com.example.simulationducontroleaerien.DTOs.TypeAvionDtos.TypeAvionDto;
+import com.example.simulationducontroleaerien.exceptions.NameTypeAvionExist;
 import com.example.simulationducontroleaerien.services.TypeAvionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -19,7 +20,7 @@ public class TypeAvionController {
     }
 
     @PostMapping
-    public ResponseEntity<TypeAvionDto> addTypeAvion(@RequestBody TypeAvionDto typeAvionDto) {
+    public ResponseEntity<TypeAvionDto> addTypeAvion(@RequestBody TypeAvionDto typeAvionDto) throws NameTypeAvionExist {
         TypeAvionDto resultDto = typeAvionService.addTypeAvion(typeAvionDto);
         return new ResponseEntity<>(resultDto, HttpStatus.CREATED);
     }

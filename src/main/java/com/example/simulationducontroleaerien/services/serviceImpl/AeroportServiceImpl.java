@@ -25,8 +25,10 @@ public class AeroportServiceImpl implements AeroportService {
                 .nombrePistes(aeroportRequest.nombrePistes())
                 .tempsAccessAuxPistes(aeroportRequest.tempsAccessAuxPistes())
                 .tempsDecollageAtterrissage(aeroportRequest.tempsDecollageAtterrissage())
+                .x(aeroportRequest.x())
+                .y(aeroportRequest.y())
                 .build();
-
+        aeroportRepository.save(aeroport);
         AeroportResponse aeroportResponse = AeroportMapper.AeroportToAeroportResponse(aeroport);
 
         return aeroportResponse;

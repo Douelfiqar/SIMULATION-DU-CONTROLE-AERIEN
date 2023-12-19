@@ -4,6 +4,7 @@ import com.example.simulationducontroleaerien.DTOs.AvionDtos.AvionRequest;
 import com.example.simulationducontroleaerien.DTOs.AvionDtos.AvionResponse;
 import com.example.simulationducontroleaerien.entities.Avion;
 import com.example.simulationducontroleaerien.entities.TypeAvion;
+import com.example.simulationducontroleaerien.exceptions.TypeAvionNotExist;
 import com.example.simulationducontroleaerien.mappers.avion.AvionMapper;
 import com.example.simulationducontroleaerien.repositories.AvionRepository;
 import com.example.simulationducontroleaerien.repositories.TypeAvionRepository;
@@ -17,7 +18,11 @@ public class AvionServiceImpl implements AvionService {
     private AvionRepository avionRepository;
     private TypeAvionRepository typeAvionRepository;
     @Override
-    public AvionResponse addAvion(AvionRequest avionRequest) {
+    public AvionResponse addAvion(AvionRequest avionRequest) throws TypeAvionNotExist{
+        Avion avion1 = avionRepository.findAvionByNumeroSerie(avionRequest.numeroSerie());
+        if(avion1 != null)
+            throw new TypeAvionNotExist("Type Avion provieded doesn't exist");
+
         Avion avion = AvionMapper.avionRequestToAvion(avionRequest);
         avionRepository.save(avion);
         AvionResponse avionResponse = AvionMapper.AvionToAvionResponse(avion);

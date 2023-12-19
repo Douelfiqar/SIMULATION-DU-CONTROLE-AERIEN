@@ -2,6 +2,7 @@ package com.example.simulationducontroleaerien.controllers;
 
 import com.example.simulationducontroleaerien.DTOs.AvionDtos.AvionRequest;
 import com.example.simulationducontroleaerien.DTOs.AvionDtos.AvionResponse;
+import com.example.simulationducontroleaerien.exceptions.TypeAvionNotExist;
 import com.example.simulationducontroleaerien.services.AvionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -20,7 +21,7 @@ public class AvionController {
     }
 
     @PostMapping
-    public ResponseEntity<AvionResponse> addAvion(@RequestBody AvionRequest avionRequest) {
+    public ResponseEntity<AvionResponse> addAvion(@RequestBody AvionRequest avionRequest) throws TypeAvionNotExist {
         AvionResponse avionResponse = avionService.addAvion(avionRequest);
         return new ResponseEntity<>(avionResponse, HttpStatus.CREATED);
     }
