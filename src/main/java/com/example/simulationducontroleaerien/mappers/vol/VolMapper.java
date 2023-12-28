@@ -10,23 +10,31 @@ import com.example.simulationducontroleaerien.entities.Vol;
 import com.example.simulationducontroleaerien.mappers.aeroport.AeroportMapper;
 import com.example.simulationducontroleaerien.mappers.avion.AvionMapper;
 import com.example.simulationducontroleaerien.repositories.AeroportRepository;
+import com.example.simulationducontroleaerien.repositories.AvionRepository;
+import com.example.simulationducontroleaerien.repositories.EscaleRepository;
 import com.example.simulationducontroleaerien.repositories.VolRepository;
 import lombok.AllArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
-@Component
+@Service
 @AllArgsConstructor
 public class VolMapper {
+    private AvionRepository avionRepository;
     private static AeroportRepository aeroportRepository;
-    public static Vol volRequestToVol(VolRequest volRequest){
+
+    public Vol volRequestToVol(VolRequest volRequest){
         Aeroport aeroportDepart = aeroportRepository.findAeroportByName(volRequest.nameAeroportDepart());
         Aeroport aeroportArrivee = aeroportRepository.findAeroportByName(volRequest.nameAeroportArrive());
-        Avion avion = AvionMapper.avionRequestToAvion(volRequest.avionRequest());
+
+        Avion avion = avionRepository.findAvionByNumeroSerie(volRequest.numeroSerieAvion());
+
+
 
         Vol vol = Vol.builder()
                 .heurDepart(volRequest.heurDepart())
                 .heurArriver(volRequest.heurArriver())
-//                .escale(volRequest.)
                 .aeroportArrivee(aeroportDepart)
                 .aeroportDepart(aeroportArrivee)
                 .avion(avion)
@@ -34,7 +42,7 @@ public class VolMapper {
 
         return vol;
     }
-    public static VolResponse VolToVolResponse(Vol vol){
+    public VolResponse VolToVolResponse(Vol vol){
         AvionResponse avionResponse = AvionMapper.AvionToAvionResponse(vol.getAvion());
 
         VolResponse volResponse = VolResponse.builder()

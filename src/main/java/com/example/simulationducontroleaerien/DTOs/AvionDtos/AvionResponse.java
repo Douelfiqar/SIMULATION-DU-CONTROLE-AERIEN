@@ -4,7 +4,8 @@ import com.example.simulationducontroleaerien.DTOs.TypeAvionDtos.TypeAvionDto;
 import lombok.Builder;
 
 @Builder
-public record AvionResponse(int id,
+public record AvionResponse(
                             String numeroSerie,
+                            String name,
                             TypeAvionDto typeAvionDto) {
 }

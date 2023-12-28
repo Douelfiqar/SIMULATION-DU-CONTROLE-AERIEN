@@ -9,6 +9,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/aeroports")
 @AllArgsConstructor
@@ -20,6 +22,10 @@ public class AeroportController {
     public ResponseEntity<AeroportResponse> addAeroport(@RequestBody AeroportRequest aeroportRequest) {
         AeroportResponse aeroportResponse = aeroportService.addAeroport(aeroportRequest);
         return new ResponseEntity<>(aeroportResponse, HttpStatus.CREATED);
+    }
+
+    public ResponseEntity<List<AeroportResponse>> listAeroport(){
+        return new ResponseEntity<>(aeroportService.lisAeroport(), HttpStatus.OK);
     }
 
     @GetMapping("/{name}")

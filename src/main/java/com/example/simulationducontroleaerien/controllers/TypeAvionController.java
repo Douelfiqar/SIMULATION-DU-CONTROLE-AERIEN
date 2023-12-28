@@ -3,22 +3,25 @@ package com.example.simulationducontroleaerien.controllers;
 import com.example.simulationducontroleaerien.DTOs.TypeAvionDtos.TypeAvionDto;
 import com.example.simulationducontroleaerien.exceptions.NameTypeAvionExist;
 import com.example.simulationducontroleaerien.services.TypeAvionService;
+import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/typeavions")
+@AllArgsConstructor
 public class TypeAvionController {
 
     private final TypeAvionService typeAvionService;
 
-    @Autowired
-    public TypeAvionController(TypeAvionService typeAvionService) {
-        this.typeAvionService = typeAvionService;
+    @GetMapping("getAllTypeAvion")
+    public ResponseEntity<List<TypeAvionDto>> listTypeAvion(){
+        return new ResponseEntity<>(typeAvionService.findAll(), HttpStatus.OK);
     }
-
     @PostMapping
     public ResponseEntity<TypeAvionDto> addTypeAvion(@RequestBody TypeAvionDto typeAvionDto) throws NameTypeAvionExist {
         TypeAvionDto resultDto = typeAvionService.addTypeAvion(typeAvionDto);

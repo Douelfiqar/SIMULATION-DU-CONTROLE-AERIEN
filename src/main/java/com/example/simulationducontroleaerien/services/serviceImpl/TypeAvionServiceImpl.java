@@ -6,13 +6,28 @@ import com.example.simulationducontroleaerien.entities.TypeAvion;
 import com.example.simulationducontroleaerien.mappers.typeAvion.TypeAvionMapper;
 import com.example.simulationducontroleaerien.repositories.TypeAvionRepository;
 import com.example.simulationducontroleaerien.services.TypeAvionService;
+import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 @Service
 @AllArgsConstructor
+@Transactional
 public class TypeAvionServiceImpl implements TypeAvionService {
     private TypeAvionRepository typeAvionRepository;
+
+    @Override
+    public List<TypeAvionDto> findAll() {
+        List<TypeAvion> typeAvionsList = typeAvionRepository.findAll();
+        List<TypeAvionDto> typeAvionDtos = typeAvionsList.stream()
+                .map(type -> TypeAvionMapper.TypeAvionToTypeAvionDto(type))
+                .collect(Collectors.toList());
+        return typeAvionDtos;
+    }
+
     @Override
     public TypeAvionDto addTypeAvion(TypeAvionDto typeAvionDto) throws NameTypeAvionExist {
 

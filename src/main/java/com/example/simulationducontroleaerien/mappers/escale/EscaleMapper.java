@@ -13,16 +13,18 @@ import com.example.simulationducontroleaerien.mappers.vol.VolMapper;
 import com.example.simulationducontroleaerien.repositories.AeroportRepository;
 import com.example.simulationducontroleaerien.repositories.EscaleRepository;
 import com.example.simulationducontroleaerien.repositories.VolRepository;
+import com.example.simulationducontroleaerien.services.serviceImpl.VolServiceImpl;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 @AllArgsConstructor
-@Component
+@Service
 public class EscaleMapper {
-    private static AeroportRepository aeroportRepository;
-    private static VolRepository volRepository;
-
-    public static Escale escaleRequestToEscale(EscaleRequest escaleRequest){
+    private AeroportRepository aeroportRepository;
+    private VolRepository volRepository;
+    private VolMapper volMapper;
+    public Escale escaleRequestToEscale(EscaleRequest escaleRequest){
         Aeroport aeroport = aeroportRepository.findAeroportByName(escaleRequest.nameAeroport());
         Vol vol = volRepository.findById(escaleRequest.idVol()).get();
 
@@ -34,11 +36,11 @@ public class EscaleMapper {
 
         return escale;
     }
-    public static EscaleResponse escaleToEscaleResponse(Escale escale){
+    public EscaleResponse escaleToEscaleResponse(Escale escale){
         EscaleResponse escaleResponse = EscaleResponse.builder()
                 .idEscale(escale.getId())
                 .dateEscale(escale.getDateEscale())
-                .vol(VolMapper.VolToVolResponse(escale.getVol()))
+                .vol(volMapper.VolToVolResponse(escale.getVol()))
                 .aeroportResponse(AeroportMapper.AeroportToAeroportResponse(escale.getAeroport()))
                 .build();
 

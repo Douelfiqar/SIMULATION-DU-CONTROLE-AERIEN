@@ -5,27 +5,34 @@ import com.example.simulationducontroleaerien.DTOs.VolDtos.VolResponse;
 import com.example.simulationducontroleaerien.DTOs.escaleDtos.EscaleRequest;
 import com.example.simulationducontroleaerien.entities.Escale;
 import com.example.simulationducontroleaerien.services.VolService;
+import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/vols")
+@AllArgsConstructor
 public class VolController {
 
     private final VolService volService;
 
-    @Autowired
-    public VolController(VolService volService) {
-        this.volService = volService;
+
+    @GetMapping("/getAllVol")
+    public ResponseEntity<List<VolResponse>> listResponseEntity(){
+        return new ResponseEntity<>(volService.findAll(), HttpStatus.OK);
     }
 
     @PostMapping
     public ResponseEntity<VolResponse> addVol(
             @RequestBody VolRequest volRequest,
             @RequestBody(required = false) EscaleRequest escaleRequest) {
+
         VolResponse volResponse = volService.addVol(volRequest, escaleRequest);
+
         return new ResponseEntity<>(volResponse, HttpStatus.CREATED);
     }
 

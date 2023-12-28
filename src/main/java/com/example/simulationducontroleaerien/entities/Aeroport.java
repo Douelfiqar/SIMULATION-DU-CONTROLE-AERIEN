@@ -1,5 +1,8 @@
 package com.example.simulationducontroleaerien.entities;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -33,10 +36,13 @@ public class Aeroport {
     private Map<Aeroport, Double> distanceAuxAutresAeroports;
 
     @OneToMany(mappedBy = "aeroport")
+    @JsonBackReference
     private Collection<Escale> escale = new ArrayList<>();
     @OneToMany(mappedBy = "aeroportDepart")
+    @JsonBackReference
     private Collection<Vol> volDepart;
     @OneToMany(mappedBy = "aeroportArrivee")
+    @JsonBackReference
     private Collection<Vol> volArrivee;
 
 }

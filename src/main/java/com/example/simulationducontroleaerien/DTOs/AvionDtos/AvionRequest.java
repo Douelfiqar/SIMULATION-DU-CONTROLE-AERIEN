@@ -1,6 +1,8 @@
 package com.example.simulationducontroleaerien.DTOs.AvionDtos;
 import com.example.simulationducontroleaerien.DTOs.TypeAvionDtos.TypeAvionDto;
+import lombok.Builder;
 
-public record AvionRequest(String numeroSerie,
+@Builder
+public record AvionRequest(String name,
                            String nameTypeAvionDto) {
 }
