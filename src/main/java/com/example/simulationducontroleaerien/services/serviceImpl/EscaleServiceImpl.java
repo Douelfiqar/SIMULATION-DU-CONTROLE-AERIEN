@@ -44,7 +44,7 @@ public class EscaleServiceImpl implements EscaleService {
                 .dateEscale(escaleRequest.dateEscale())
                 .vol(vol)
                 .build();
-
+        escaleRepository.save(escale);
         EscaleResponse escaleResponse = escaleMapper.escaleToEscaleResponse(escale);
         return escaleResponse;
     }
