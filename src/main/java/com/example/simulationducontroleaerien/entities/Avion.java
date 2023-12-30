@@ -25,11 +25,9 @@ public class Avion {
     private String nameAvion;
 
     @ManyToOne
-    @JsonBackReference
+    //@JsonBackReference
     private TypeAvion typeAvion;
     @OneToMany
     @JsonBackReference
     private Collection<Vol> vol;
-
-
 }

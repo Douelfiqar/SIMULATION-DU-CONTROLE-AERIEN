@@ -2,6 +2,7 @@ package com.example.simulationducontroleaerien.mappers.vol;
 
 import com.example.simulationducontroleaerien.DTOs.AvionDtos.AvionRequest;
 import com.example.simulationducontroleaerien.DTOs.AvionDtos.AvionResponse;
+import com.example.simulationducontroleaerien.DTOs.TypeAvionDtos.TypeAvionDto;
 import com.example.simulationducontroleaerien.DTOs.VolDtos.VolRequest;
 import com.example.simulationducontroleaerien.DTOs.VolDtos.VolResponse;
 import com.example.simulationducontroleaerien.DTOs.escaleDtos.EscaleResponse;
@@ -54,6 +55,7 @@ public class VolMapper {
                 .collect(Collectors.toList());
 
         VolResponse volResponse = VolResponse.builder()
+                .id(vol.getId())
                 .aeroportDepart(AeroportMapper.AeroportToAeroportResponse(vol.getAeroportDepart()))
                 .aeroportArrive(AeroportMapper.AeroportToAeroportResponse(vol.getAeroportArrivee()))
                 .heurArriver(vol.getHeurArriver())

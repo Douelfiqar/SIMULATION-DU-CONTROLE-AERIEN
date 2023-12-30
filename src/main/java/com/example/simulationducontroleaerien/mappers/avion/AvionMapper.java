@@ -30,12 +30,16 @@ public class AvionMapper {
         return avion;
     }
     public static AvionResponse AvionToAvionResponse(Avion avion){
+        TypeAvionDto typeAvionDto = TypeAvionMapper.TypeAvionToTypeAvionDto(avion.getTypeAvion());
 
         AvionResponse avionResponse = AvionResponse.builder()
+                .id(avion.getId())
+                .typeAvionDto(typeAvionDto)
                 .numeroSerie(avion.getNumeroSerie())
                 .name(avion.getNameAvion())
                 .typeAvionDto(TypeAvionMapper.TypeAvionToTypeAvionDto(avion.getTypeAvion()))
                 .build();
+
         return avionResponse;
     }
 }
