@@ -28,10 +28,9 @@ public class VolController {
 
     @PostMapping
     public ResponseEntity<VolResponse> addVol(
-            @RequestBody VolRequest volRequest,
-            @RequestBody(required = false) EscaleRequest escaleRequest) {
+            @RequestBody VolRequest volRequest) {
 
-        VolResponse volResponse = volService.addVol(volRequest, escaleRequest);
+        VolResponse volResponse = volService.addVol(volRequest);
 
         return new ResponseEntity<>(volResponse, HttpStatus.CREATED);
     }

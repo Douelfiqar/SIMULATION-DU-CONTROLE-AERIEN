@@ -7,7 +7,6 @@ import lombok.Builder;
 import java.util.Date;
 @Builder
 public record VolRequest(Date heurDepart,
-                         Date heurArriver,
                          String nameAeroportDepart,
                          String nameAeroportArrive,
                          String numeroSerieAvion) {

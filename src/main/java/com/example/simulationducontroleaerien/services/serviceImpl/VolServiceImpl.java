@@ -20,10 +20,7 @@ import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -46,28 +43,41 @@ public class VolServiceImpl implements VolService {
     }
 
     @Override
-    public VolResponse addVol(VolRequest volRequest, EscaleRequest escaleRequest) {
+    public VolResponse addVol(VolRequest volRequest) {
 
         Aeroport aeroportDepart = aeroportRepository.findAeroportByName(volRequest.nameAeroportDepart());
         Aeroport aeroportArrive = aeroportRepository.findAeroportByName(volRequest.nameAeroportArrive());
         Avion avion = avionRepository.findAvionByNumeroSerie(volRequest.numeroSerieAvion());
 
+        // ADD STATIC HOUR FOR TEST
+        Date currentDate = new Date();
+
+        // Add 2 hours (2 * 60 * 60 * 1000 milliseconds)
+        long twoHoursInMilliseconds = 2 * 60 * 60 * 1000;
+        long updatedTimeMillis = currentDate.getTime() + twoHoursInMilliseconds;
+
+        // Create a new Date object with the updated time
+        Date updatedDate = new Date(updatedTimeMillis);
+
+        // i need List of Escale
+
+
        Vol vol = Vol.builder()
                 .heurDepart(volRequest.heurDepart())
-                .heurArriver(volRequest.heurArriver())
+                .heurArriver(updatedDate)
                 .aeroportDepart(aeroportDepart)
                 .aeroportArrivee(aeroportArrive)
                 .avion(avion)
                 .build();
 
-
+/*
         if(escaleRequest != null){
             List<Escale> escaleList = new ArrayList<>();
             Escale escale = escaleMapper.escaleRequestToEscale(escaleRequest);
             escaleList.add(escale);
             vol.setEscale(escaleList);
             escaleRepository.save(escale);
-        }
+        }*/
 
         volRepository.save(vol);
         VolResponse volResponse = volMapper.VolToVolResponse(vol);

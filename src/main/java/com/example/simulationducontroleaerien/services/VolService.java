@@ -10,7 +10,7 @@ import java.util.List;
 
 public interface VolService {
     public List<VolResponse> findAll();
-    public VolResponse addVol(VolRequest volRequest, EscaleRequest escaleRequest);
+    public VolResponse addVol(VolRequest volRequest);
     public VolResponse getVolById(int id);
     public VolResponse updateVol(VolRequest volRequest, int id, Escale escale);
     public void removeVolById(int id);
