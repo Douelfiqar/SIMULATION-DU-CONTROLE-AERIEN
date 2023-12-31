@@ -10,5 +10,4 @@ import java.util.List;
 public interface AvionRepository extends JpaRepository<Avion, Integer> {
     public Avion findAvionByNumeroSerie(String numeroSerie);
     public void deleteAvionByNumeroSerie(String numeroSerie);
-    public List<Avion> findAvionByTypeAvion(String typeAvion);
 }
