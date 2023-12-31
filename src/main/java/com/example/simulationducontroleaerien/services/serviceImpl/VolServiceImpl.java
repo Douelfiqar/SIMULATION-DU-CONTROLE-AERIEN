@@ -102,7 +102,6 @@ public class VolServiceImpl implements VolService {
         Vol vol1 = Vol.builder()
                 .aeroportArrivee(aeroportDepart)
                 .aeroportArrivee(aeroportArrive)
-                .heurArriver(volRequest.heurArriver())
                 .heurDepart(volRequest.heurDepart())
                 .avion(avion)
                 .build();

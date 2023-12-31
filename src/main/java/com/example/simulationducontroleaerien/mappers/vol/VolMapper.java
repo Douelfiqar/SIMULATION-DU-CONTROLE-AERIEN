@@ -19,6 +19,7 @@ import com.example.simulationducontroleaerien.repositories.EscaleRepository;
 import com.example.simulationducontroleaerien.repositories.VolRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
