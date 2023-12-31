@@ -44,9 +44,7 @@ public class SimulationDuControleAerienApplication {
             aeroportService.addAeroport(a9);
             AeroportRequest a10 = new AeroportRequest("Mexico City International Airport (MEX), Mexico",
             		"Mexico", 2, 300, 23, 15, 8, 40, 70,19.4362, -99.0721);
-            aeroportService.addAeroport(a10);
-            
-            
+            aeroportService.addAeroport(a10);                     
             
             
             AeroportRequest a11 = new AeroportRequest("Casablanca Mohammed V International Airport (CMN), Morocco",
@@ -78,10 +76,7 @@ public class SimulationDuControleAerienApplication {
             aeroportService.addAeroport(b6);
             AeroportRequest b7 = new AeroportRequest("Sydney Kingsford Smith Airport (SYD), Australia",
             		"Australia", 2, 300, 17, 15, 8, 40, 70, -33.946111,151.177222);
-            aeroportService.addAeroport(b7);
-            
-            
-            
+            aeroportService.addAeroport(b7);            
         };
     }
 }
