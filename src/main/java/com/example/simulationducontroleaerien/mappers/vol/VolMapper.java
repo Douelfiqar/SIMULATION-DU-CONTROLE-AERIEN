@@ -51,9 +51,13 @@ public class VolMapper {
     }
     public VolResponse VolToVolResponse(Vol vol){
         AvionResponse avionResponse = AvionMapper.AvionToAvionResponse(vol.getAvion());
-        List<EscaleResponse> escaleList = vol.getEscale().stream()
-                .map(escale -> escaleMapper.escaleToEscaleResponse(escale))
-                .collect(Collectors.toList());
+        Collection<Escale> escaleList = vol.getEscale();
+        List<EscaleResponse> escaleList2 = new ArrayList<>();
+        if(escaleList != null) {
+           escaleList2 = vol.getEscale().stream()
+                    .map(escale -> escaleMapper.escaleToEscaleResponse(escale))
+                    .collect(Collectors.toList());
+        }
 
         VolResponse volResponse = VolResponse.builder()
                 .id(vol.getId())
@@ -62,7 +66,7 @@ public class VolMapper {
                 .heurArriver(vol.getHeurArriver())
                 .heurDepart(vol.getHeurDepart())
                 .avionResponse(avionResponse)
-                .escale(escaleList)
+                .escale(escaleList2)
                 .build();
 
         return volResponse;
