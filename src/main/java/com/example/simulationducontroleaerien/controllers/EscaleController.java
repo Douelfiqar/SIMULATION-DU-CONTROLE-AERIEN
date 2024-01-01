@@ -3,20 +3,24 @@ package com.example.simulationducontroleaerien.controllers;
 import com.example.simulationducontroleaerien.DTOs.escaleDtos.EscaleRequest;
 import com.example.simulationducontroleaerien.DTOs.escaleDtos.EscaleResponse;
 import com.example.simulationducontroleaerien.services.EscaleService;
+import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/escales")
+@AllArgsConstructor
 public class EscaleController {
 
     private final EscaleService escaleService;
 
-    @Autowired
-    public EscaleController(EscaleService escaleService) {
-        this.escaleService = escaleService;
+    @GetMapping("getAllEscales")
+    public ResponseEntity<List<EscaleResponse>> geListEscale(){
+        return new ResponseEntity<>(escaleService.lisEscale() ,HttpStatus.OK);
     }
 
     @PostMapping

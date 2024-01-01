@@ -16,11 +16,15 @@ public class AeroportMapper {
                 .nombrePistes(aeroportDto.nombrePistes())
                 .tempsDecollageAtterrissage(aeroportDto.tempsDecollageAtterrissage())
                 .nombreDePlaceAuSol(aeroportDto.nombreDePlaceAuSol())
+                .x(aeroportDto.x())
+                .y(aeroportDto.y())
                 .build();
         return aeroport;
     }
 
     public static AeroportResponse AeroportToAeroportResponse(Aeroport aeroport){
+
+
         AeroportResponse aeroportResponse = AeroportResponse.builder()
                 .delaiAttenteAuSol(aeroport.getDelaiAttenteAuSol())
 //                .escale(aeroport.getEscale())
@@ -35,6 +39,8 @@ public class AeroportMapper {
                 .nombrePistes(aeroport.getNombrePistes())
                 .tempsAccessAuxPist(aeroport.getTempsAccessAuxPistes())
                 .tempsDecollageAtterrissage(aeroport.getTempsDecollageAtterrissage())
+                .x(aeroport.getX())
+                .y(aeroport.getY())
                 .build();
 
         return aeroportResponse;

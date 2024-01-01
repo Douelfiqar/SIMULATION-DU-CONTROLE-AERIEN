@@ -6,13 +6,33 @@ import com.example.simulationducontroleaerien.entities.Aeroport;
 import com.example.simulationducontroleaerien.mappers.aeroport.AeroportMapper;
 import com.example.simulationducontroleaerien.repositories.AeroportRepository;
 import com.example.simulationducontroleaerien.services.AeroportService;
+
+import jakarta.persistence.EntityManager;
+import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
+
 @Service
 @AllArgsConstructor
+@Transactional
 public class AeroportServiceImpl implements AeroportService {
     private AeroportRepository aeroportRepository;
+
+    @Override
+    public List<AeroportResponse> lisAeroport() {
+        List<Aeroport> aeroportList = aeroportRepository.findAll();
+        List<AeroportResponse> aeroportResponsesList = aeroportList.stream()
+                .map(aeroport -> AeroportMapper.AeroportToAeroportResponse(aeroport))
+                .collect(Collectors.toList());
+
+        return aeroportResponsesList;
+    }
+
     @Override
     public AeroportResponse addAeroport(AeroportRequest aeroportRequest) {
         Aeroport aeroport = Aeroport.builder()
@@ -25,8 +45,10 @@ public class AeroportServiceImpl implements AeroportService {
                 .nombrePistes(aeroportRequest.nombrePistes())
                 .tempsAccessAuxPistes(aeroportRequest.tempsAccessAuxPistes())
                 .tempsDecollageAtterrissage(aeroportRequest.tempsDecollageAtterrissage())
+                .x(aeroportRequest.x())
+                .y(aeroportRequest.y())
                 .build();
-
+        aeroportRepository.save(aeroport);
         AeroportResponse aeroportResponse = AeroportMapper.AeroportToAeroportResponse(aeroport);
 
         return aeroportResponse;

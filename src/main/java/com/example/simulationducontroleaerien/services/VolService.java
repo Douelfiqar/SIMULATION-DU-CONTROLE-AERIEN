@@ -9,8 +9,11 @@ import com.example.simulationducontroleaerien.DTOs.escaleDtos.EscaleRequest;
 import com.example.simulationducontroleaerien.entities.Aeroport;
 import com.example.simulationducontroleaerien.entities.Escale;
 
+import java.util.List;
+
 public interface VolService {
-    public VolResponse addVol(VolRequest volRequest, EscaleRequest escaleRequest);
+    public List<VolResponse> findAll();
+    public VolResponse addVol(VolRequest volRequest);
     public VolResponse getVolById(int id);
     public VolResponse updateVol(VolRequest volRequest, int id, Escale escale);
     public void removeVolById(int id);

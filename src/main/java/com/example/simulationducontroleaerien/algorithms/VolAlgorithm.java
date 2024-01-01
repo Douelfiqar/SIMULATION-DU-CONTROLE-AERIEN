@@ -5,12 +5,17 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.beans.factory.annotation.Autowired;
+
 import com.example.simulationducontroleaerien.DTOs.TypeAvionDtos.TypeAvionDto;
 import com.example.simulationducontroleaerien.entities.Aeroport;
 import com.example.simulationducontroleaerien.entities.Avion;
 import com.example.simulationducontroleaerien.entities.Vol;
+import com.example.simulationducontroleaerien.repositories.AeroportRepository;
 
 public class VolAlgorithm {
+	@Autowired
+	private static AeroportRepository aeroportRepository; 
 	private Vol vol;
 
 	public VolAlgorithm(Vol vol) {
@@ -36,6 +41,7 @@ public class VolAlgorithm {
 	        Double distanceTravirse = 0.0;
 	        
 	        Aeroport minEaroport = depart;
+	        System.out.println(minEaroport.getDistanceAuxAutresAeroports().get(arrive));
 	        distances.put(minEaroport, minEaroport.getDistanceAuxAutresAeroports().get(arrive));
 	        visited.add(minEaroport);
 	        
@@ -44,16 +50,21 @@ public class VolAlgorithm {
 	        	minEaroport = calculerMinDistance(minEaroport, visited);
 	        	visited.add(minEaroport);
 	        	distanceTravirse += predecesseur.getDistanceAuxAutresAeroports().get(minEaroport);
-	        	
-	        	if(distances.get(predecesseur) > distanceTravirse + minEaroport.getDistanceAuxAutresAeroports().get(arrive)) {
+	        	System.out.println(distanceTravirse+" " + depart.getDistanceAuxAutresAeroports().get(arrive));
+	        	if(!minEaroport.equals(arrive) && distances.get(predecesseur) > distanceTravirse + minEaroport.getDistanceAuxAutresAeroports().get(arrive)) {
 	        		distances.put(minEaroport,distanceTravirse + minEaroport.getDistanceAuxAutresAeroports().get(arrive));
 	        	}else {
 	        		distances.put(minEaroport, distances.get(predecesseur));
 	        	}
 	        }
 	        
+	        for (Aeroport aeroport : visited) {
+	        	System.out.println("algo" + aeroport.getIdAeroport());
+			}
+	        
 	        Double dis = Double.MAX_VALUE;
 	        for (Map.Entry<Aeroport, Double> entry : distances.entrySet()) {
+	        	
 				if(entry.getValue() > dis) {
 					path.add(entry.getKey());
 					dis = entry.getValue();
@@ -65,6 +76,7 @@ public class VolAlgorithm {
 							estDansPos = true;
 						}
 						if(estDansPos && entry1.getValue() < entry.getValue() ) {
+							
 							path.add(entry.getKey());
 							estChange = true;
 						}
@@ -76,8 +88,10 @@ public class VolAlgorithm {
 			}
 	        
 	        path.add(arrive);
-	        return path;
+	        return visited;
 	    }
+	
+
 	    
 	    private static Aeroport calculerMinDistance(Aeroport currentEaroport, List<Aeroport> visited) {
 	    	Aeroport earoportMin = null;

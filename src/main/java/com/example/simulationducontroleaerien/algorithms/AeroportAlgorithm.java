@@ -2,6 +2,8 @@ package com.example.simulationducontroleaerien.algorithms;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
 
 import com.example.simulationducontroleaerien.DTOs.TypeAvionDtos.TypeAvionDto;
 import com.example.simulationducontroleaerien.entities.Aeroport;
@@ -48,14 +50,38 @@ public class AeroportAlgorithm {
     }
 	
 	// calcule distanse aeroport au autre aeroport
-	public void calculeDistanceAuxAutreAeroport(Collection<Aeroport> aeroports){
-		for (Aeroport aeroport1 : aeroports) {
-			Double distance = calculeDistance(aeroport, aeroport1);
-			aeroport.getDistanceAuxAutresAeroports().put(aeroport1, distance);
-			// les autres aeroport doivent aussi ajouter la distance de ce aeroport
-			aeroport1.getDistanceAuxAutresAeroports().put(aeroport, distance);
-		}
+	public void calculeDistanceAuxAutreAeroport(Collection<Aeroport> aeroports) {
+	    Map<Aeroport, Double> distances = new HashMap<>();
+	    for (Aeroport aeroport1 : aeroports) {
+	        if (aeroport1!=null && !aeroport1.equals(aeroport)) {
+	            Double distance = calculeDistance(aeroport, aeroport1);
+	            Aeroport aeroport3 = Aeroport.builder()
+	            		.delaiAntiCollision(aeroport1.getDelaiAntiCollision())
+	            		.delaiAttenteAuSol(aeroport1.getDelaiAttenteAuSol())
+	            		.dureeBoucleAttente(aeroport1.getDureeBoucleAttente())
+//	            		.escale(aeroport1.getEscale())
+	            		.idAeroport(aeroport1.getIdAeroport())
+	            		.name(aeroport1.getName())
+	            		.localisation(aeroport1.getLocalisation())
+	            		.nombreDePlaceAuSol(aeroport1.getNombreDePlaceAuSol())
+	            		.nombrePistes(aeroport1.getNombrePistes())
+	            		.tempsAccessAuxPistes(aeroport1.getTempsAccessAuxPistes())
+	            		.tempsDecollageAtterrissage(aeroport1.getTempsDecollageAtterrissage())
+//	            		.volArrivee(aeroport1.getVolArrivee())
+//	            		.volDepart(aeroport1.getVolDepart())
+	            		.x(aeroport1.getX())
+	            		.y(aeroport1.getY())
+	            		.build();
+	            distances.put(aeroport3, distance);
+	            // The other aeroport should also add the distance of this aeroport
+//	            aeroport1.getDistanceAuxAutresAeroports().put(aeroport, distance);
+	        }
+	    }
+
+	    // Set the distances for the current aeroport
+	    aeroport.getDistanceAuxAutresAeroports().putAll(distances);
 	}
+
 
 	public Avion getFreeAvionByType(Vol vol,TypeAvionDto type) {
 		Collection<Vol> vols = aeroport.getVolArrivee();

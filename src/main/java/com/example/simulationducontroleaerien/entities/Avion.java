@@ -1,5 +1,8 @@
 package com.example.simulationducontroleaerien.entities;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -19,9 +22,12 @@ public class Avion {
     private int id;
     @Column(name = "numeroSerie", unique = true)
     private String numeroSerie;
+    private String nameAvion;
 
     @ManyToOne
+    @JsonBackReference
     private TypeAvion typeAvion;
-    @OneToMany(mappedBy = "avion")
+    @OneToMany
+    @JsonBackReference
     private Collection<Vol> vol;
 }

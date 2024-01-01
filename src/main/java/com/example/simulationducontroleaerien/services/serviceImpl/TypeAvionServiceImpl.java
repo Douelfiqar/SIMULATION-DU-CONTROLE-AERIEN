@@ -1,31 +1,54 @@
 package com.example.simulationducontroleaerien.services.serviceImpl;
 
 import com.example.simulationducontroleaerien.DTOs.TypeAvionDtos.TypeAvionDto;
+import com.example.simulationducontroleaerien.exceptions.NameTypeAvionExist;
 import com.example.simulationducontroleaerien.entities.TypeAvion;
 import com.example.simulationducontroleaerien.mappers.typeAvion.TypeAvionMapper;
 import com.example.simulationducontroleaerien.repositories.TypeAvionRepository;
 import com.example.simulationducontroleaerien.services.TypeAvionService;
+import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 @Service
 @AllArgsConstructor
+@Transactional
 public class TypeAvionServiceImpl implements TypeAvionService {
     private TypeAvionRepository typeAvionRepository;
+
     @Override
-    public TypeAvionDto addTypeAvion(TypeAvionDto aeroportRequest) {
+    public List<TypeAvionDto> findAll() {
+        List<TypeAvion> typeAvionsList = typeAvionRepository.findAll();
+        List<TypeAvionDto> typeAvionDtos = typeAvionsList.stream()
+                .map(type -> TypeAvionMapper.TypeAvionToTypeAvionDto(type))
+                .collect(Collectors.toList());
+        return typeAvionDtos;
+    }
+
+    @Override
+    public TypeAvionDto addTypeAvion(TypeAvionDto typeAvionDto) throws NameTypeAvionExist {
+
+        TypeAvion typeAvion1 = typeAvionRepository.findTypeAvionByName(typeAvionDto.name());
+
+        if(typeAvion1 != null)
+            throw new NameTypeAvionExist("Name Invalid");
+
         TypeAvion typeAvion = TypeAvion.builder()
-                .vitesseNormale(aeroportRequest.vitesseNormale())
-                .vitesseBoucleAttente(aeroportRequest.vitesseBoucleAttente())
-                .consomationBoucleAttente(aeroportRequest.consomationBoucleAttente())
-                .consomationNormale(aeroportRequest.consomationNormale())
+                .name(typeAvionDto.name())
+                .vitesseNormale(typeAvionDto.vitesseNormale())
+                .vitesseBoucleAttente(typeAvionDto.vitesseBoucleAttente())
+                .consomationBoucleAttente(typeAvionDto.consomationBoucleAttente())
+                .consomationNormale(typeAvionDto.consomationNormale())
                 .build();
 
         typeAvionRepository.save(typeAvion);
 
-        TypeAvionDto typeAvionDto = TypeAvionMapper.TypeAvionToTypeAvionDto(typeAvion);
+        TypeAvionDto typeAvionDto1 = TypeAvionMapper.TypeAvionToTypeAvionDto(typeAvion);
 
-        return typeAvionDto;
+        return typeAvionDto1;
     }
 
     @Override

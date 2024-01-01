@@ -2,31 +2,46 @@ package com.example.simulationducontroleaerien.mappers.vol;
 
 import com.example.simulationducontroleaerien.DTOs.AvionDtos.AvionRequest;
 import com.example.simulationducontroleaerien.DTOs.AvionDtos.AvionResponse;
+import com.example.simulationducontroleaerien.DTOs.TypeAvionDtos.TypeAvionDto;
 import com.example.simulationducontroleaerien.DTOs.VolDtos.VolRequest;
 import com.example.simulationducontroleaerien.DTOs.VolDtos.VolResponse;
+import com.example.simulationducontroleaerien.DTOs.escaleDtos.EscaleResponse;
 import com.example.simulationducontroleaerien.entities.Aeroport;
 import com.example.simulationducontroleaerien.entities.Avion;
+import com.example.simulationducontroleaerien.entities.Escale;
 import com.example.simulationducontroleaerien.entities.Vol;
 import com.example.simulationducontroleaerien.mappers.aeroport.AeroportMapper;
 import com.example.simulationducontroleaerien.mappers.avion.AvionMapper;
+import com.example.simulationducontroleaerien.mappers.escale.EscaleMapper;
 import com.example.simulationducontroleaerien.repositories.AeroportRepository;
+import com.example.simulationducontroleaerien.repositories.AvionRepository;
+import com.example.simulationducontroleaerien.repositories.EscaleRepository;
 import com.example.simulationducontroleaerien.repositories.VolRepository;
 import lombok.AllArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
-@Component
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+import java.util.stream.Collectors;
+
+@Service
 @AllArgsConstructor
 public class VolMapper {
-    private static AeroportRepository aeroportRepository;
-    public static Vol volRequestToVol(VolRequest volRequest){
+    private AvionRepository avionRepository;
+    private AeroportRepository aeroportRepository;
+    private EscaleMapper escaleMapper;
+    public Vol volRequestToVol(VolRequest volRequest){
         Aeroport aeroportDepart = aeroportRepository.findAeroportByName(volRequest.nameAeroportDepart());
         Aeroport aeroportArrivee = aeroportRepository.findAeroportByName(volRequest.nameAeroportArrive());
-        Avion avion = AvionMapper.avionRequestToAvion(volRequest.avionRequest());
+
+        Avion avion = avionRepository.findAvionByNumeroSerie(volRequest.numeroSerieAvion());
 
         Vol vol = Vol.builder()
                 .heurDepart(volRequest.heurDepart())
-                .heurArriver(volRequest.heurArriver())
-//                .escale(volRequest.)
                 .aeroportArrivee(aeroportDepart)
                 .aeroportDepart(aeroportArrivee)
                 .avion(avion)
@@ -34,16 +49,20 @@ public class VolMapper {
 
         return vol;
     }
-    public static VolResponse VolToVolResponse(Vol vol){
+    public VolResponse VolToVolResponse(Vol vol){
         AvionResponse avionResponse = AvionMapper.AvionToAvionResponse(vol.getAvion());
+        List<EscaleResponse> escaleList = vol.getEscale().stream()
+                .map(escale -> escaleMapper.escaleToEscaleResponse(escale))
+                .collect(Collectors.toList());
 
         VolResponse volResponse = VolResponse.builder()
+                .id(vol.getId())
                 .aeroportDepart(AeroportMapper.AeroportToAeroportResponse(vol.getAeroportDepart()))
                 .aeroportArrive(AeroportMapper.AeroportToAeroportResponse(vol.getAeroportArrivee()))
                 .heurArriver(vol.getHeurArriver())
                 .heurDepart(vol.getHeurDepart())
                 .avionResponse(avionResponse)
-                //.escale()
+                .escale(escaleList)
                 .build();
 
         return volResponse;

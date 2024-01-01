@@ -1,23 +1,39 @@
 package com.example.simulationducontroleaerien;
 
+import java.util.ArrayList;
+import java.util.Collection;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 
+import com.example.simulationducontroleaerien.DTOs.AvionDtos.AvionRequest;
+import com.example.simulationducontroleaerien.DTOs.TypeAvionDtos.TypeAvionDto;
 import com.example.simulationducontroleaerien.DTOs.aeroportDtos.AeroportRequest;
+import com.example.simulationducontroleaerien.algorithms.AeroportAlgorithm;
+import com.example.simulationducontroleaerien.entities.Aeroport;
+import com.example.simulationducontroleaerien.entities.Avion;
+import com.example.simulationducontroleaerien.entities.TypeAvion;
+import com.example.simulationducontroleaerien.repositories.AeroportRepository;
 import com.example.simulationducontroleaerien.services.AeroportService;
+import com.example.simulationducontroleaerien.services.AvionService;
+import com.example.simulationducontroleaerien.services.TypeAvionService;
 
 @SpringBootApplication
 public class SimulationDuControleAerienApplication {
-
+	@Autowired
+	AeroportRepository aeroportRepository;
     public static void main(String[] args) {
         SpringApplication.run(SimulationDuControleAerienApplication.class, args);
     }
     
     @Bean
-    public CommandLineRunner initializeData(AeroportService aeroportService) {
+    public CommandLineRunner initializeData(AeroportService aeroportService,AvionService avionService,TypeAvionService typeAvionService) {
         return args -> {
+        	aeroportRepository.deleteAll();
+        	
             AeroportRequest a1 = new AeroportRequest("Los Angeles International Airport ",
             		"Los Angeles", 2, 300, 20, 15, 8, 40, 70, 33.942791, -118.410042);
             aeroportService.addAeroport(a1);
@@ -44,7 +60,7 @@ public class SimulationDuControleAerienApplication {
             aeroportService.addAeroport(a9);
             AeroportRequest a10 = new AeroportRequest("Mexico City International Airport (MEX), Mexico",
             		"Mexico", 2, 300, 23, 15, 8, 40, 70,19.4362, -99.0721);
-            aeroportService.addAeroport(a10);                     
+            aeroportService.addAeroport(a10);                  
             
             
             AeroportRequest a11 = new AeroportRequest("Casablanca Mohammed V International Airport (CMN), Morocco",
@@ -74,9 +90,41 @@ public class SimulationDuControleAerienApplication {
             AeroportRequest b6 = new AeroportRequest("JBangkok Suvarnabhumi Airport (BKK), Thailand",
             		"Thailand", 2, 300, 25, 15, 8, 40, 70,13.6915,100.7501);
             aeroportService.addAeroport(b6);
-            AeroportRequest b7 = new AeroportRequest("Sydney Kingsford Smith Airport (SYD), Australia",
-            		"Australia", 2, 300, 17, 15, 8, 40, 70, -33.946111,151.177222);
-            aeroportService.addAeroport(b7);            
+            calculateDistance();
+            
+	            typeAvionService.addTypeAvion(TypeAvionDto.builder()
+	            		.consomationBoucleAttente(20)
+	            		.consomationNormale(30)
+	            		.name("short")
+	            		.vitesseBoucleAttente(100)
+	            		.vitesseNormale(175)
+	            		.build()
+	            		);
+	            avionService.addAvion(AvionRequest.builder()
+	            		.name("avion")
+	            		.nameTypeAvionDto("short")
+	            		.build());
         };
     }
+
+//    public CommandLineRunner initializeData(AeroportRepository aeroportRepository, AvionRepository avionRepository) {
+//        return args -> {
+//            Aeroport aeroportDepart = aeroportRepository.findAeroportByName("MOHAMMED V INTERNATIONAL AIRPORT - CASABLANCA AIRPORT");
+//            Aeroport aeroportArivee = aeroportRepository.findAeroportByName("Los Angeles International Airport ");
+//
+//        };
+//    }
+    
+    public Collection<Aeroport> getAeroports(){
+        return aeroportRepository.findAll();
+    }
+    
+    public void calculateDistance() {
+    	Collection<Aeroport> aeroports = getAeroports();
+    	for (Aeroport aeroport : aeroports) {
+			new AeroportAlgorithm(aeroport).calculeDistanceAuxAutreAeroport(aeroports);
+			aeroportRepository.save(aeroport);
+		}
+    	
+     }
 }

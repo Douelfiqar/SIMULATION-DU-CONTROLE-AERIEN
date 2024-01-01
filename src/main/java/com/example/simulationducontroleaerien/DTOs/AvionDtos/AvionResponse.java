@@ -6,5 +6,6 @@ import lombok.Builder;
 @Builder
 public record AvionResponse(int id,
                             String numeroSerie,
+                            String name,
                             TypeAvionDto typeAvionDto) {
 }
