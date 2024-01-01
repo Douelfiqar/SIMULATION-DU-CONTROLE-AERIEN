@@ -32,7 +32,7 @@ public class Vol {
     @ManyToOne
     @JsonManagedReference
     private Aeroport aeroportArrivee;
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     @JsonManagedReference
     private Avion avion;
 }

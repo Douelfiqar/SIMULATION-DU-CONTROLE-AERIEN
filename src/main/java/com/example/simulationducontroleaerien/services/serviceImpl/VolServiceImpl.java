@@ -180,7 +180,11 @@ public class VolServiceImpl implements VolService {
     @Override
     public void removeVolById(int id) {
         Vol vol = volRepository.findById(id).orElseThrow();
-        volRepository.deleteById(id);
+        if (vol != null) {
+        	vol.getAvion().getVol().remove(vol);
+        	volRepository.delete(vol);
+		}
+        
     }
 
     // find the shortest path for a vol
