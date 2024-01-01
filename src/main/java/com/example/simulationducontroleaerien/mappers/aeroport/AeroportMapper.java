@@ -3,6 +3,7 @@ package com.example.simulationducontroleaerien.mappers.aeroport;
 import com.example.simulationducontroleaerien.DTOs.aeroportDtos.AeroportRequest;
 import com.example.simulationducontroleaerien.DTOs.aeroportDtos.AeroportResponse;
 import com.example.simulationducontroleaerien.entities.Aeroport;
+import com.example.simulationducontroleaerien.mappers.distanceAuxAutreAeroport.DistanceAuxAutreAeroportMapper;
 
 public class AeroportMapper {
     public static Aeroport AeroportdtoToAeroport(AeroportRequest aeroportDto){
@@ -27,10 +28,10 @@ public class AeroportMapper {
 
         AeroportResponse aeroportResponse = AeroportResponse.builder()
                 .delaiAttenteAuSol(aeroport.getDelaiAttenteAuSol())
-//                .escale(aeroport.getEscale())
+                .escale(aeroport.getEscale())
                 .volDepart(aeroport.getVolDepart())
                 .volArrivee(aeroport.getVolArrivee())
-                .distanceAuxAutresAeroports(aeroport.getDistanceAuxAutresAeroports())
+                .distanceAuxAutresAeroports(DistanceAuxAutreAeroportMapper.distanceToDistanceResponce(aeroport.getDistanceAuxAutresAeroports()))
                 .delaiAntiCollision(aeroport.getDelaiAntiCollision())
                 .dureeBoucleAttente(aeroport.getDureeBoucleAttente())
                 .localisation(aeroport.getLocalisation())

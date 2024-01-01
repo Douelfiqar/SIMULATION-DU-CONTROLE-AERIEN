@@ -15,6 +15,8 @@ import com.example.simulationducontroleaerien.entities.Aeroport;
 import com.example.simulationducontroleaerien.entities.Avion;
 import com.example.simulationducontroleaerien.entities.Escale;
 import com.example.simulationducontroleaerien.entities.Vol;
+import com.example.simulationducontroleaerien.mappers.aeroport.AeroportMapper;
+import com.example.simulationducontroleaerien.mappers.avion.AvionMapper;
 import com.example.simulationducontroleaerien.mappers.escale.EscaleMapper;
 import com.example.simulationducontroleaerien.mappers.vol.VolMapper;
 import com.example.simulationducontroleaerien.repositories.AeroportRepository;
@@ -135,12 +137,13 @@ public class VolServiceImpl implements VolService {
             escaleRepository.save(escale);
         }*/
 
-        volRepository.save(vol);
+        vol = volRepository.save(vol);
         for (Escale escale : escales) {
 			System.out.println("escale has seved!");
 			escaleRepository.save(escale);
 		}
         VolResponse volResponse = volMapper.VolToVolResponse(vol);
+       
        return volResponse;
     }
 

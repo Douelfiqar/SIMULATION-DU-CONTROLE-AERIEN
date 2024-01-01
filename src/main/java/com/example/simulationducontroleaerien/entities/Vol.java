@@ -27,10 +27,10 @@ public class Vol {
     @JsonIgnore
     private Collection<Escale> escale;
     @ManyToOne
-    @JsonManagedReference
+    @JsonIgnore
     private Aeroport aeroportDepart;
     @ManyToOne
-    @JsonManagedReference
+    @JsonIgnore
     private Aeroport aeroportArrivee;
     @ManyToOne
     @JsonManagedReference

@@ -28,6 +28,6 @@ public class Avion {
     @JsonBackReference
     private TypeAvion typeAvion;
     @OneToMany
-    @JsonBackReference
+    @JsonIgnore
     private Collection<Vol> vol;
 }

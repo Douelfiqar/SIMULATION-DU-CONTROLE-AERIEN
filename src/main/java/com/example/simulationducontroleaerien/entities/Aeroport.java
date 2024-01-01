@@ -9,6 +9,7 @@ import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CascadeType;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.ElementCollection;
@@ -42,6 +43,7 @@ public class Aeroport {
     private Double x;
     private Double y;
     @ElementCollection(fetch = FetchType.EAGER)
+    @JsonProperty
     private Map<Aeroport, Double> distanceAuxAutresAeroports;
 
     @OneToMany(mappedBy = "aeroport")

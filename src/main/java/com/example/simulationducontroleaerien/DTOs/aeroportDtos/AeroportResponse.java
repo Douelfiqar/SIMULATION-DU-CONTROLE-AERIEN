@@ -1,5 +1,6 @@
 package com.example.simulationducontroleaerien.DTOs.aeroportDtos;
 
+import com.example.simulationducontroleaerien.DTOs.distanceAuxAutreAeroportDtos.DistaceAuxAutreAeroportResponse;
 import com.example.simulationducontroleaerien.entities.Aeroport;
 import com.example.simulationducontroleaerien.entities.Escale;
 import com.example.simulationducontroleaerien.entities.Vol;
@@ -18,7 +19,7 @@ public record AeroportResponse(String name,
                                int delaiAntiCollision ,
                                int tempsDecollageAtterrissage,
                                int dureeBoucleAttente,
-                               Map<Aeroport, Double> distanceAuxAutresAeroports,
+                               Collection<DistaceAuxAutreAeroportResponse> distanceAuxAutresAeroports,
                                Collection<Escale> escale,
                                Collection<Vol> volDepart,
                                Collection<Vol> volArrivee,

@@ -1,8 +1,13 @@
 package com.example.simulationducontroleaerien.mappers.vol;
 
-import com.example.simulationducontroleaerien.DTOs.AvionDtos.AvionRequest;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+import java.util.stream.Collectors;
+
+import org.springframework.stereotype.Service;
+
 import com.example.simulationducontroleaerien.DTOs.AvionDtos.AvionResponse;
-import com.example.simulationducontroleaerien.DTOs.TypeAvionDtos.TypeAvionDto;
 import com.example.simulationducontroleaerien.DTOs.VolDtos.VolRequest;
 import com.example.simulationducontroleaerien.DTOs.VolDtos.VolResponse;
 import com.example.simulationducontroleaerien.DTOs.escaleDtos.EscaleResponse;
@@ -15,18 +20,8 @@ import com.example.simulationducontroleaerien.mappers.avion.AvionMapper;
 import com.example.simulationducontroleaerien.mappers.escale.EscaleMapper;
 import com.example.simulationducontroleaerien.repositories.AeroportRepository;
 import com.example.simulationducontroleaerien.repositories.AvionRepository;
-import com.example.simulationducontroleaerien.repositories.EscaleRepository;
-import com.example.simulationducontroleaerien.repositories.VolRepository;
-import lombok.AllArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Lazy;
-import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-import java.util.stream.Collectors;
+import lombok.AllArgsConstructor;
 
 @Service
 @AllArgsConstructor
@@ -51,9 +46,13 @@ public class VolMapper {
     }
     public VolResponse VolToVolResponse(Vol vol){
         AvionResponse avionResponse = AvionMapper.AvionToAvionResponse(vol.getAvion());
-        List<EscaleResponse> escaleList = vol.getEscale().stream()
-                .map(escale -> escaleMapper.escaleToEscaleResponse(escale))
-                .collect(Collectors.toList());
+        Collection<Escale> escaleList = vol.getEscale();
+        List<EscaleResponse> escaleList2 = new ArrayList<>();
+        if(escaleList != null) {
+           escaleList2 = vol.getEscale().stream()
+                    .map(escale -> escaleMapper.escaleToEscaleResponse(escale))
+                    .collect(Collectors.toList());
+        }
 
         VolResponse volResponse = VolResponse.builder()
                 .id(vol.getId())
@@ -62,7 +61,7 @@ public class VolMapper {
                 .heurArriver(vol.getHeurArriver())
                 .heurDepart(vol.getHeurDepart())
                 .avionResponse(avionResponse)
-                .escale(escaleList)
+                .escale(escaleList2)
                 .build();
 
         return volResponse;
