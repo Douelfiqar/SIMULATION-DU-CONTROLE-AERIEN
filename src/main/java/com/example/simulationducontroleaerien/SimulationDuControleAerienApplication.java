@@ -15,8 +15,13 @@ import com.example.simulationducontroleaerien.DTOs.aeroportDtos.AeroportRequest;
 import com.example.simulationducontroleaerien.algorithms.AeroportAlgorithm;
 import com.example.simulationducontroleaerien.entities.Aeroport;
 import com.example.simulationducontroleaerien.entities.Avion;
+import com.example.simulationducontroleaerien.entities.Escale;
 import com.example.simulationducontroleaerien.entities.TypeAvion;
 import com.example.simulationducontroleaerien.repositories.AeroportRepository;
+import com.example.simulationducontroleaerien.repositories.AvionRepository;
+import com.example.simulationducontroleaerien.repositories.EscaleRepository;
+import com.example.simulationducontroleaerien.repositories.TypeAvionRepository;
+import com.example.simulationducontroleaerien.repositories.VolRepository;
 import com.example.simulationducontroleaerien.services.AeroportService;
 import com.example.simulationducontroleaerien.services.AvionService;
 import com.example.simulationducontroleaerien.services.TypeAvionService;
@@ -25,6 +30,14 @@ import com.example.simulationducontroleaerien.services.TypeAvionService;
 public class SimulationDuControleAerienApplication {
 	@Autowired
 	AeroportRepository aeroportRepository;
+	@Autowired
+	EscaleRepository escaleRepository;
+	@Autowired
+	AvionRepository avionRepository;
+	@Autowired
+	TypeAvionRepository typeAvionRepository;
+	@Autowired
+	VolRepository volRepository;
     public static void main(String[] args) {
         SpringApplication.run(SimulationDuControleAerienApplication.class, args);
     }
@@ -32,8 +45,8 @@ public class SimulationDuControleAerienApplication {
     @Bean
     public CommandLineRunner initializeData(AeroportService aeroportService,AvionService avionService,TypeAvionService typeAvionService) {
         return args -> {
-        	aeroportRepository.deleteAll();
         	
+        	aeroportRepository.deleteAll();
             AeroportRequest a1 = new AeroportRequest("Los Angeles International Airport ",
             		"Los Angeles", 2, 300, 20, 15, 8, 40, 70, 33.942791, -118.410042);
             aeroportService.addAeroport(a1);

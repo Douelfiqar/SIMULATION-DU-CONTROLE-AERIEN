@@ -23,7 +23,7 @@ public class Vol {
     private int id;
     private Date heurDepart;
     private Date heurArriver;
-    @OneToMany(mappedBy = "vol",fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "vol",fetch = FetchType.EAGER,cascade = CascadeType.ALL)
     @JsonIgnore
     private Collection<Escale> escale;
     @ManyToOne
@@ -32,7 +32,7 @@ public class Vol {
     @ManyToOne
     @JsonManagedReference
     private Aeroport aeroportArrivee;
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JsonManagedReference
     private Avion avion;
 }

@@ -72,13 +72,5 @@ public class VolController {
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
     
-    // get shortest path for a vol by id
-    @GetMapping("/path/{id}")
-    public ResponseEntity<List<Aeroport>> getVolShortestPath(@PathVariable int id){
-    	List<Aeroport> path = volService.getShortestPath(id);
-    	if(path != null)
-    		return new ResponseEntity<List<Aeroport>>(path, HttpStatus.OK);
-    	else
-    		return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-    }
+    
 }
