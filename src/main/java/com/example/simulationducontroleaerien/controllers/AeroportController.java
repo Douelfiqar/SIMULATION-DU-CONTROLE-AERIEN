@@ -24,6 +24,7 @@ public class AeroportController {
         return new ResponseEntity<>(aeroportResponse, HttpStatus.CREATED);
     }
 
+    @GetMapping
     public ResponseEntity<List<AeroportResponse>> listAeroport(){
         return new ResponseEntity<>(aeroportService.lisAeroport(), HttpStatus.OK);
     }

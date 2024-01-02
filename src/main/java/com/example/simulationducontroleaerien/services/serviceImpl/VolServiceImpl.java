@@ -121,6 +121,30 @@ public class VolServiceImpl implements VolService {
 				escales.add(escale);
 			}
 		}
+		Date arriveDate = null;
+		if(!escales.isEmpty()) {
+			try {
+				Escale escaleFinal = escales.get(escales.size() - 1);
+				Double time = escaleFinal.getAeroport().getDistanceAuxAutresAeroports().get(vol.getAeroportArrivee()) / vitess;
+				
+				long escaleTimeInMillis = escaleFinal.getDateEscale().getTime() + (long) (time * 60 * 60 * 1000); 
+				arriveDate = new Date(escaleTimeInMillis);
+                vol.setHeurArriver(arriveDate);
+				}catch (Exception e) {
+					System.out.println("the value of the speed is 0!");
+				}
+		}else {
+			try {
+			Double time = vol.getAeroportDepart().getDistanceAuxAutresAeroports().get(vol.getAeroportArrivee()) / vitess;
+			
+			long escaleTimeInMillis = vol.getHeurDepart().getTime() + (long) (time * 60 * 60 * 1000); 
+			arriveDate = new Date(escaleTimeInMillis);
+			
+            vol.setHeurArriver(arriveDate);
+			}catch (Exception e) {
+				System.out.println("the value of the speed is 0!");
+			}
+		}
 		
 		// add escales to the vol
 		vol.setEscale(escales);
