@@ -41,7 +41,6 @@ public class VolAlgorithm {
 	        Double distanceTravirse = 0.0;
 	        
 	        Aeroport minEaroport = depart;
-	        System.out.println(minEaroport.getDistanceAuxAutresAeroports().get(arrive));
 	        distances.put(minEaroport, minEaroport.getDistanceAuxAutresAeroports().get(arrive));
 	        visited.add(minEaroport);
 	        
@@ -50,7 +49,6 @@ public class VolAlgorithm {
 	        	minEaroport = calculerMinDistance(minEaroport, visited);
 	        	visited.add(minEaroport);
 	        	distanceTravirse += predecesseur.getDistanceAuxAutresAeroports().get(minEaroport);
-	        	System.out.println(distanceTravirse+" " + depart.getDistanceAuxAutresAeroports().get(arrive));
 	        	if(!minEaroport.equals(arrive) && distances.get(predecesseur) > distanceTravirse + minEaroport.getDistanceAuxAutresAeroports().get(arrive)) {
 	        		distances.put(minEaroport,distanceTravirse + minEaroport.getDistanceAuxAutresAeroports().get(arrive));
 	        	}else {
@@ -58,13 +56,8 @@ public class VolAlgorithm {
 	        	}
 	        }
 	        
-	        for (Aeroport aeroport : visited) {
-	        	System.out.println("algo" + aeroport.getIdAeroport());
-			}
-	        
 	        Double dis = Double.MAX_VALUE;
 	        for (Map.Entry<Aeroport, Double> entry : distances.entrySet()) {
-	        	
 				if(entry.getValue() > dis) {
 					path.add(entry.getKey());
 					dis = entry.getValue();
@@ -88,7 +81,7 @@ public class VolAlgorithm {
 			}
 	        
 	        path.add(arrive);
-	        return visited;
+	        return path;
 	    }
 	
 

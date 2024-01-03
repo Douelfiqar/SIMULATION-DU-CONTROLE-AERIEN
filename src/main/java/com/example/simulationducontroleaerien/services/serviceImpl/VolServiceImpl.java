@@ -79,6 +79,7 @@ public class VolServiceImpl implements VolService {
        
        //add List of Escale
 		List<Aeroport> path = VolAlgorithm.volPath(vol);
+		System.out.println("path size"+ path.size());
 		List<Escale> escales = new ArrayList<>();
 		for (Aeroport aeroport : path) {
 			System.out.println(aeroport.getIdAeroport());
