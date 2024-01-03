@@ -40,8 +40,13 @@ public class VolAlgorithm {
 	        List<Aeroport> visited = new ArrayList<>();
 	        Double distanceTravirse = 0.0;
 	        
+	        
 	        Aeroport minEaroport = depart;
-	        distances.put(minEaroport, minEaroport.getDistanceAuxAutresAeroports().get(arrive));
+	        if(estDistancePossible(vol,minEaroport.getDistanceAuxAutresAeroports().get(arrive))) {
+	        	distances.put(minEaroport, minEaroport.getDistanceAuxAutresAeroports().get(arrive));
+	        }else {
+	        	distances.put(minEaroport, Double.MAX_VALUE);
+	        }
 	        visited.add(minEaroport);
 	        
 	        while(!arrive.equals(minEaroport)) {
@@ -58,7 +63,7 @@ public class VolAlgorithm {
 	        
 	        Double dis = Double.MAX_VALUE;
 	        for (Map.Entry<Aeroport, Double> entry : distances.entrySet()) {
-				if(entry.getValue() > dis) {
+				if(entry.getValue() < dis) { // >
 					path.add(entry.getKey());
 					dis = entry.getValue();
 				}else {
@@ -84,7 +89,26 @@ public class VolAlgorithm {
 	        return path;
 	    }
 	
-
+		public static boolean estDistancePossible(Vol vol, Double distance) {
+			Double consommation = vol.getAvion().getTypeAvion().getConsomationNormale() * distance;
+			Double longCourie = 14000.0;
+			Double moyenneCourie = 6000.0;
+			Double petiteCourie = 2000.0;
+			String typeAvion = vol.getAvion().getTypeAvion().getName();
+			switch (typeAvion) {
+			case "petit" : 
+				if(consommation <= petiteCourie)
+					return true;
+			case "long" : 
+				if(consommation <= longCourie)
+					return true;
+			case "moyenne" :
+				if(consommation <= moyenneCourie)
+					return true;
+			}
+			return false;
+			
+		}
 	    
 	    private static Aeroport calculerMinDistance(Aeroport currentEaroport, List<Aeroport> visited) {
 	    	Aeroport earoportMin = null;
